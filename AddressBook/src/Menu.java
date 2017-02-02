@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
@@ -123,11 +124,12 @@ public class Menu extends JFrame {
 		importbutton.setBackground(Color.green);
 		importbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				chooser.showOpenDialog(null);
+				int result = chooser.showOpenDialog(null);
+				if(result == JFileChooser.APPROVE_OPTION){
 				System.out.println(chooser.getSelectedFile());
 				String path = chooser.getSelectedFile().getAbsolutePath();
+				
 				path = trimTSV(path);
 				importContacts = Reader.reader(path);
 				System.out.println("importContacts length: " + Integer.toString(importContacts.size()));
@@ -146,6 +148,7 @@ public class Menu extends JFrame {
 				f2.setLocation(150, 50);
 
 				System.out.println(FileName);
+				}
 			}
 		});
 
