@@ -20,7 +20,7 @@ public class Reader {
 			while ((line = br.readLine()) != null) {
 				// contact array of a single person, use comma to delimit
 					String[] infoArr = line.split(tsvSplitBy);
-					String[] contactInfo = { "", "", "", "", "", "", "", "", "", "" };
+					String[] contactInfo = { "", "", "", "", "", "", "", "", "", "", "", ""};
 					System.out.println(Integer.toString(infoArr.length));
 					for (int i = 0; i < infoArr.length; i++) {
 						contactInfo[i] = infoArr[i];
@@ -38,8 +38,8 @@ public class Reader {
 							System.out.println("Contact: firstName = " + tempContact.get_firstName());
 						
 						} else {
-						Contact tempContact = new Contact(infoArr[0], infoArr[1], infoArr[2], infoArr[3], infoArr[4],
-								infoArr[5], infoArr[6], infoArr[7], infoArr[8], infoArr[9]);
+						Contact tempContact = new Contact(contactInfo[0], contactInfo[1], contactInfo[2], contactInfo[3], contactInfo[4],
+								contactInfo[5], contactInfo[6], contactInfo[7], contactInfo[8], contactInfo[9]);
 						tempContactList.add(tempContact);
 						System.out.println("Contact: firstName = " + tempContact.get_firstName());
 						}
