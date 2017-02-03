@@ -22,6 +22,7 @@ public class PersonInfo extends JFrame {
 
 	public PersonInfo(ArrayList<Contact> openContactList) {
 		super("Contact Info!");
+		Frame1.isEdited = true;
 		tempContact = new Contact(" ", " ", " ", " ", " ", " ", " ", " ", " ", " ");
 		setLayout(new BorderLayout());
 

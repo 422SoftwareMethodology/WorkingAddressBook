@@ -24,6 +24,7 @@ public class PersonInfoEdit extends JFrame {
 			String editLastName, String editPhoneNumber, String editAddress1, String editAddress2, String editCity,
 			String editState, String editZip, String editEmail, String editWebsite) {
 		super("Contact Info!");
+		Frame1.isEdited = true;
 		tempContact = new Contact(" ", " ", " ", " ", " ", " ", " ", " ", " ", " ");
 		setLayout(new BorderLayout());
 

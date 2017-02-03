@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,6 +20,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -40,11 +43,35 @@ public class Frame1 extends JFrame {
 	public int rowSelected = -1;
 	public String URL;
 	public int brokenURL = 0;
+	public static boolean isEdited = false;
 
 	public static ArrayList<Contact> openContactList = new ArrayList<Contact>();
 
 	public Frame1(String fileLoc) { // This is the main interface of addressbook
 		super(Menu.getFileName(fileLoc));
+			addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent we) {
+				if (isEdited) {
+					String ObjButtons[] = { "Save" , "Exit" };
+				    int PromptResult = JOptionPane.showOptionDialog(null, 
+				        "There are unsaved changes, are you sure you want to exit?", Menu.getFileName(fileLoc), 
+				        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, 
+				        ObjButtons,ObjButtons[1]);
+				    if(PromptResult == 0) {
+				    	try {
+							Writer.writer(openContactList, fileLoc);
+						} catch (FileNotFoundException e) {
+							e.printStackTrace();
+						}        
+				    } else if (PromptResult == 1) {
+				    	System.exit(0);
+				    }
+				} else {
+					System.exit(0);
+				}
+			}
+		});
+
 		setLayout(new BorderLayout());
 
 		buttonPanel1 = new JPanel(new GridLayout(1, 5)); // panel for buttons
@@ -121,6 +148,7 @@ public class Frame1 extends JFrame {
 				System.out.println("File Location before Save button trim: " + fileLoc);
 				// String fileLocation = trimTSV(fileLoc);
 				save(fileLoc);
+				isEdited = false;
 			}
 		});
 
@@ -131,14 +159,8 @@ public class Frame1 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 				chooser.showSaveDialog(null);
-
 				String path = chooser.getSelectedFile().getAbsolutePath();
-				String filename = chooser.getSelectedFile().getName();
-
-				// System.out.println("Filename: " + filename + " Path: " +
-				// path);
 				saveAs(path);
-
 			}
 		});
 
@@ -349,11 +371,11 @@ public class Frame1 extends JFrame {
 		openContactList = AddTableToContact();
 		try {
 			Writer.saveAsWriter(openContactList, path);
+			isEdited = false;
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
 	}
 
 	public static void getNewContact(ArrayList<Contact> contactList) {
