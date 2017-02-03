@@ -1,9 +1,12 @@
-
-//package addressbook;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+
+/**
+ * Class to write data out to a .tsv file
+ * 
+ */
 
 public class Writer {
 	static String header = new String("CITY" + '\t' + "STATE" + '\t' + "ZIP" + '\t' + "Delivery" +
@@ -37,10 +40,8 @@ public class Writer {
 				sb.append(focusContact.get_website()); // website 9
 				sb.append('\n'); // end of contact
 			}
-
 			pw.write(sb.toString());
 		}
-		System.out.println("done!");
 	}
 
 	public static void saveAsWriter(ArrayList<Contact> contactArrayList, String path) throws FileNotFoundException {
@@ -71,10 +72,8 @@ public class Writer {
 				sb.append(focusContact.get_website()); // website 9
 				sb.append('\n'); // end of contact
 			}
-
 			pw.write(sb.toString());
 		}
-		System.out.println("done!");
 	}
 
 	public static void exportWriter(ArrayList<Contact> contactArrayList, String path) throws FileNotFoundException {
@@ -105,7 +104,5 @@ public class Writer {
 
 			pw.write(sb.toString());
 		}
-		System.out.println("done!");
 	}
-
 }

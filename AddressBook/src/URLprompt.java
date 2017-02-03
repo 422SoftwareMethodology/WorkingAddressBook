@@ -17,7 +17,7 @@ public class URLprompt extends JFrame {
 	public URLprompt() {
 		panel = new JPanel(new GridLayout(2, 1));
 		buttonpanel = new JPanel(new GridLayout(1, 3));
-		Warning = new JLabel("                       WARNING:Invalid URL!");
+		Warning = new JLabel("                       WARNING: Invalid URL!");
 		OKButton = new JButton("OK!");
 		OKButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

@@ -74,12 +74,12 @@ public class PersonInfo extends JFrame {
 					checknum += 1;
 
 				if (fname.getText().isEmpty() && lname.getText().isEmpty()) {
-					prompt1 p1 = new prompt1();
+					Prompt1 p1 = new Prompt1();
 					p1.setLocation(300, 200);
 				}
 
 				else if (checknum == 8) {
-					prompt1 p1 = new prompt1();
+					Prompt1 p1 = new Prompt1();
 					p1.setLocation(300, 200);
 				}
 
@@ -104,16 +104,7 @@ public class PersonInfo extends JFrame {
 					else if ((zip.getText().isEmpty() == false) && (checkzip(zip.getText()) == false)) {
 						promptzip p2 = new promptzip(openContactList);
 						p2.setLocation(500, 200);
-					}
-
-					/*
-					 * else if((email.getText().isEmpty() ==
-					 * false)&&(checkemail(email.getText()) == false)){ prompt4
-					 * p4 = new prompt4(); p4.setLocation(450, 300);
-					 * tempContact.set_email(em.getText());
-					 * tempContact.set_website(f.getText()); }
-					 */
-					else {
+					} else {
 						tempContact.set_firstName(fname.getText());
 						tempContact.set_lastName(lname.getText());
 						tempContact.set_phoneNumber(phonenum.getText());

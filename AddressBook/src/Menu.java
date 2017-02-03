@@ -1,13 +1,10 @@
 import java.awt.BorderLayout;
-
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,11 +14,9 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.JFileChooser;
@@ -31,8 +26,6 @@ import javax.swing.JFileChooser;
 public class Menu extends JFrame {
 	private JButton newbutton, openbutton, quitbutton, deletebutton, importbutton, exportbutton, editbutton;
 	private JScrollPane sc;
-	private JLabel titlelabel;
-	private JTextArea text;
 	private JTable table;
 	private int rowSelected = -1;
 	public static String bookFolderLoc = System.getProperty("user.dir");
@@ -44,18 +37,10 @@ public class Menu extends JFrame {
 
 	public Menu(ArrayList<String> addressNames) {
 		super("Welcome!");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addressBookNames = addressNames;
 		JFileChooser chooser = new JFileChooser();
-
-		// Container c= getContentPane();
-		// c.setLayout(new BorderLayout());
-
-		JPanel buttonPanel = new JPanel(new GridLayout(1, 7)); // panel for
-																// buttons
-		// JPanel titlepanel = new JPanel(new GridLayout(1, 1)); //panel in the
-		// center, we may change it to a display field that shows all
-		// addressbooks exists.
-		// titlepanel.setBackground(Color.yellow);
+		JPanel buttonPanel = new JPanel(new GridLayout(1, 7));
 		newbutton = new JButton("New");
 		newbutton.setBackground(Color.green);
 		newbutton.addActionListener(new ActionListener() {
@@ -64,12 +49,6 @@ public class Menu extends JFrame {
 															// window.
 				Createbookname c1 = new Createbookname(bookFolderLoc);
 				c1.setLocation(10, 10);
-				/*
-				 * Frame1 f1 = new Frame1(c1.fileLocation); f1.setLocation(200,
-				 * 50); f1.save(c1.fileLocation);
-				 * addressBookNames.add(c1.getFileLocation());
-				 * refreshTable(addressBookNames);
-				 */
 			}
 		});
 
@@ -80,9 +59,7 @@ public class Menu extends JFrame {
 															// addressbook
 															// interface.
 				String fileName = (String) table.getValueAt(rowSelected, 0);
-				// fileName = addTSV(fileName);
 				String fileLoc = bookFolderLoc + fileName;
-				System.out.println(fileLoc);
 				Frame1 f1 = new Frame1(fileLoc);
 				f1.setLocation(10, 10);
 			}
@@ -94,17 +71,6 @@ public class Menu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String fileName = (String) table.getValueAt(rowSelected, 0);
 				DeleteBookConfirmation deleteBook = new DeleteBookConfirmation(rowSelected, fileName);
-				
-				/*
-				
-				fileName = addTSV(fileName);
-				String trimmed = trimTSV(fileName);
-				String fileLocation = bookFolderLoc + fileName;
-				File f = new File(fileLocation);
-				f.delete();
-				addressBookNames.remove(fileName);
-				refreshTable(addressBookNames);
-				*/
 			}
 		});
 		
@@ -117,7 +83,6 @@ public class Menu extends JFrame {
 			}
 		});
 
-
 		importbutton = new JButton("Import");
 		importbutton.setBackground(Color.green);
 		importbutton.addActionListener(new ActionListener() {
@@ -125,27 +90,21 @@ public class Menu extends JFrame {
 				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				int result = chooser.showOpenDialog(null);
 				if(result == JFileChooser.APPROVE_OPTION){
-				System.out.println(chooser.getSelectedFile());
-				String path = chooser.getSelectedFile().getAbsolutePath();
-				
+				String path = chooser.getSelectedFile().getAbsolutePath();	
 				path = trimTSV(path);
 				importContacts = Reader.reader(path);
-				System.out.println("importContacts length: " + Integer.toString(importContacts.size()));
 				String FileName = getFileName(chooser.getSelectedFile().getAbsolutePath());
 				String trimmed = trimTSV(FileName);
 				String newFileLocation = bookFolderLoc + trimmed;
 				try {
 					Writer.writer(importContacts, bookFolderLoc + trimmed);
 				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				addressBookNames.add(FileName);
 				refreshTable(addressBookNames);
 				Frame1 f2 = new Frame1(newFileLocation);
 				f2.setLocation(150, 50);
-
-				System.out.println(FileName);
 				}
 			}
 		});
@@ -155,13 +114,11 @@ public class Menu extends JFrame {
 		exportbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String fileName = (String) table.getValueAt(rowSelected, 0);
-				//String trimmed = trimTSV(fileName);
 				String fileLoc = bookFolderLoc + fileName;
 				exportContacts = Reader.reader(fileLoc);
 				try {
 					Writer.exportWriter(exportContacts, exportFolderLoc + fileName);
 				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -183,8 +140,7 @@ public class Menu extends JFrame {
 			}
 		}
 
-		// text = new JTextArea();
-		String[] columnNames = { "Address books				" };
+		String[] columnNames = { "Address Books				" };
 		tableModel = new DefaultTableModel(columnNames, 0);
 		table = new JTable(tableModel);
 		table.setEnabled(false);
@@ -198,13 +154,6 @@ public class Menu extends JFrame {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		sc = new JScrollPane(table);
 		refreshTable(addressBookNames);
-
-		// bookmenu = new JMenuBar();
-
-		// titlelabel = new JLabel();
-		// titlelabel.setText(Createbookname.getInputaddressbook());
-		// titlelabel.setFont(new java.awt.Font("Dialog", 1, 25)); //setfont
-		// size and style.
 		buttonPanel.add(newbutton); // add all buttons to the panel
 		buttonPanel.add(openbutton);
 		buttonPanel.add(deletebutton);
@@ -212,9 +161,7 @@ public class Menu extends JFrame {
 		buttonPanel.add(importbutton);
 		buttonPanel.add(exportbutton);
 		buttonPanel.add(quitbutton);
-		// titlepanel.add(bookmenu);
 		add(buttonPanel, BorderLayout.NORTH); // set panel location
-		// add(titlepanel, BorderLayout.CENTER);
 		add(sc, BorderLayout.CENTER);
 		sc.setVisible(true);
 		setSize(700, 500); // set frame size
@@ -222,18 +169,14 @@ public class Menu extends JFrame {
 		table.addMouseListener(new MouseAdapter() { // click on cell
 			public void mousePressed(MouseEvent e) {
 				int row = table.rowAtPoint(e.getPoint());
-				int col = table.columnAtPoint(e.getPoint());
 				table.getSelectionModel().setSelectionInterval(row, row);
-				System.out.println(row);
 				rowSelected = row;
 			}
 		});
-
 	}
 
 	public static void addAddressBook(String fileLoc) {
 		String bookName = getFileName(fileLoc);
-		System.out.println("This is the file name: " + fileLoc);
 		addressBookNames.add(bookName);
 		refreshTable(addressBookNames);
 	}
@@ -264,7 +207,6 @@ public class Menu extends JFrame {
 	public static String trimTSV(String fileName) {
 		int length = fileName.length();
 		String returnName = fileName.substring(0, length - 4);
-		System.out.println(returnName);
 		return returnName;
 	}
 
@@ -284,7 +226,6 @@ public class Menu extends JFrame {
 			bookName = trimTSV(bookName);
 			Object[] data = { bookName };
 			Menu.tableModel.addRow(data);
-
 		}
 
 	}
@@ -295,12 +236,10 @@ public class Menu extends JFrame {
 		try {
 			Files.move(oldPath, oldPath.resolveSibling(newPath));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		addressBookNames.remove(oldName + ".tsv");
 		addressBookNames.add(newName + ".tsv");
 		refreshTable(addressBookNames);
 	}
-
 }

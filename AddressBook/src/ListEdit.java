@@ -6,7 +6,6 @@ public class ListEdit {
 
 		// store index of Contact objects for multiple last names
 		ArrayList<Contact> foundArrayList = new ArrayList<>();
-
 		int arrayListSize = arrayList.size();
 
 		// Very simple search. Room for improvement..
@@ -58,21 +57,8 @@ public class ListEdit {
 				foundArrayList.add(focusContact);
 			}
 		}
-
-		// didn't find anything
-		if (foundArrayList.isEmpty()) {
-			System.out.println("\n\nDidn't find anything");
-		}
-		// found some names
-		else {
-			System.out.println("\n\nWe found the contact. Huzzah!");
-			Display.display(foundArrayList);
-		}
-
 		FoundFrame f1 = new FoundFrame(foundArrayList);
 		f1.setLocation(200, 200);
-
 		return;
 	}
-
 }

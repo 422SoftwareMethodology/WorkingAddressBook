@@ -9,15 +9,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class prompt1 extends JFrame {
+public class Prompt1 extends JFrame {
 	private JButton OKButton;
 	private JLabel Warning, empty1, empty2;
 	private JPanel panel, buttonpanel;
 
-	public prompt1() {
+	public Prompt1() {
 		panel = new JPanel(new GridLayout(2, 1));
 		buttonpanel = new JPanel(new GridLayout(1, 3));
-		Warning = new JLabel("   Please enter a firstname or lastname and at least one attribute except email!");
+		Warning = new JLabel("   Please enter a first name or a last name and at least one other field");
 		OKButton = new JButton("OK!");
 		OKButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

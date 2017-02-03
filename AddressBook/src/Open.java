@@ -27,7 +27,6 @@ public class Open {
 		try {
 			d.browse(uri);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

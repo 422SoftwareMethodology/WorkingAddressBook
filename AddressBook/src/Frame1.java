@@ -8,7 +8,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
@@ -41,6 +40,7 @@ public class Frame1 extends JFrame {
 	private static JTable table1;
 	private static DefaultTableModel tableModel;
 	public int rowSelected = -1;
+	public static boolean resortZIP = true;
 	public String URL;
 	public int brokenURL = 0;
 	public static boolean isEdited = false;
@@ -130,7 +130,7 @@ public class Frame1 extends JFrame {
 																// info
 																// interface
 			public void actionPerformed(ActionEvent e) {
-				deleteconfirmation d1 = new deleteconfirmation(rowSelected);
+				DeleteConfirmation d1 = new DeleteConfirmation(rowSelected);
 				d1.setLocation(200, 200);
 			}
 		});
@@ -149,8 +149,6 @@ public class Frame1 extends JFrame {
 		savebutton.setBackground(Color.green);
 		savebutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("File Location before Save button trim: " + fileLoc);
-				// String fileLocation = trimTSV(fileLoc);
 				save(fileLoc);
 				isEdited = false;
 			}
@@ -219,7 +217,6 @@ public class Frame1 extends JFrame {
 				int row = table1.rowAtPoint(e.getPoint());
 				int col = table1.columnAtPoint(e.getPoint());
 				table1.getSelectionModel().setSelectionInterval(row, row);
-				System.out.println(row);
 				rowSelected = row;
 				// Hyperlink code
 				// only trys to open when double clicked
@@ -229,10 +226,7 @@ public class Frame1 extends JFrame {
 					if (col == 9) {
 						// String to hold URL
 						URL = (String) table1.getModel().getValueAt(table1.getSelectedRow(),
-								table1.getSelectedColumn());
-						System.out.println("double clicked");
-						System.out.println(URL);
-
+									   table1.getSelectedColumn());
 						// Sets Jframe for hyperlink window
 						JFrame jFrame = new JFrame();
 						Container cPane = jFrame.getContentPane();
@@ -245,7 +239,6 @@ public class Frame1 extends JFrame {
 														// browser
 								Open.openURI(uri);
 							} catch (URISyntaxException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 						} catch (IOException ex) {
@@ -254,27 +247,10 @@ public class Frame1 extends JFrame {
 							URLprompt up = new URLprompt();
 							up.setLocation(300, 200);
 						}
-						HyperlinkListener listener = new HyperlinkListener() {
-							@Override
-							public void hyperlinkUpdate(HyperlinkEvent event) {
-								if (event.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-									try {
-										editorPane.setPage(event.getURL());
-									} catch (IOException ioe) {
-										System.err.println("Error loading url from link: " + ioe);
-									}
-								}
-							}
-
-						};
 						// Resets URL if not successful
-						if (brokenURL == 0) {
-							System.out.println("Success");
-						} else {
-							System.out.println("Reset URL");
+						if (brokenURL != 0) {
 							brokenURL = 0;
 						}
-
 					}
 				}
 			}// end of hyperlink
@@ -285,21 +261,16 @@ public class Frame1 extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				int col = table1.columnAtPoint(e.getPoint());
 				if (col == 1) {
-					System.out.println("Sorting by lastName");
 					Sorter.sortByLastname(openContactList);
 					AddContactToTable();
 				}
 				if (col == 7) {
-					System.out.println("Sorting by zip");
 					Sorter.sortByZip(openContactList);
 					AddContactToTable();
 				}
 			}
-
 		});
-
 		AddContactToTable(); // This is the display refresh
-
 		setSize(1200, 500); // set frame size
 		setVisible(true);
 	}
@@ -311,7 +282,7 @@ public class Frame1 extends JFrame {
 			}
 		}
 		String firstName = " ", lastName = " ", phoneNumber = " ", address = " ", address2 = " ", city = " ",
-				state = " ", zip = " ", email = " ", website = " ";
+			   state = " ", zip = " ", email = " ", website = " ";
 		for (int i = 0; i < openContactList.size(); ++i) {
 			firstName = openContactList.get(i).get_firstName();
 			lastName = openContactList.get(i).get_lastName();
@@ -330,26 +301,18 @@ public class Frame1 extends JFrame {
 	}
 
 	public static ArrayList<Contact> AddTableToContact() {
-
 		int nRow = tableModel.getRowCount(), nCol = tableModel.getColumnCount();
 		ArrayList<Contact> tempContactList = new ArrayList<>();
-
-		// String first,last,phone,street,city,state,email;
 		String[] contactInfo = new String[nCol + 1];
 
 		for (int i = 0; i < nRow; i++) {
-			// Contact tempContact = new Contact();
-
 			for (int j = 0; j < nCol; j++) {
-				// tableData[i][j] = tableModel.getValueAt(i,j);
-				// System.out.println(tableModel.getValueAt(i,j));
 				contactInfo[j] = (String) tableModel.getValueAt(i, j);
 			}
 			Contact tempContact = new Contact(contactInfo[5], contactInfo[6], contactInfo[7], contactInfo[3],
 					contactInfo[4], contactInfo[1], contactInfo[0], contactInfo[2], contactInfo[8], contactInfo[9]);
 			tempContactList.add(tempContact);
 		}
-		// Display.display(tempContactList);
 		return tempContactList;
 	}
 
@@ -366,10 +329,8 @@ public class Frame1 extends JFrame {
 			Writer.writer(openContactList, fileLoc);
 			isEdited = false;
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		// Display.display(AddressBook.openContactList);
 	}
 
 	public static void saveAs(String path) {
@@ -378,7 +339,6 @@ public class Frame1 extends JFrame {
 			Writer.saveAsWriter(openContactList, path);
 			isEdited = false;
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -390,8 +350,6 @@ public class Frame1 extends JFrame {
 	public static String trimTSV(String fileName) {
 		int length = fileName.length();
 		String returnName = fileName.substring(0, length - 4);
-		System.out.println(returnName);
 		return returnName;
 	}
-
 }

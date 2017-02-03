@@ -9,6 +9,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * Edit the name of an address book
+ * 
+ */
+
+@SuppressWarnings("serial")
 public class EditAddressName extends JFrame{
 	private JButton confirmButton, cancelButton;
 	private JLabel nameLabel;
@@ -19,7 +25,6 @@ public class EditAddressName extends JFrame{
 		super("Edit Address Name");
 		namePanel = new JPanel(new GridLayout(1,2)); 
 	    buttonPanel = new JPanel(new GridLayout(1, 2));
-	    
 	    confirmButton = new JButton("Confirm");
 	    cancelButton = new JButton("Cancel");
 	    nameLabel = new JLabel("Name: ");
@@ -40,16 +45,12 @@ public class EditAddressName extends JFrame{
 				dispose();
 			}
 		});
-
 	    
 	    namePanel.add(nameLabel);
 	    namePanel.add(nameTextField);
-	    
 	    add(namePanel, BorderLayout.NORTH);
-		add(buttonPanel, BorderLayout.CENTER);
-		
+		add(buttonPanel, BorderLayout.CENTER);		
 		setSize(350, 90);
-		setVisible(true);
-		
+		setVisible(true);		
 	}
 }

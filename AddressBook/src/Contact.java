@@ -1,5 +1,3 @@
-import java.util.Comparator;
-
 public class Contact implements Comparable<Contact> {
 	private String _firstName;
 	private String _lastName;
@@ -13,7 +11,7 @@ public class Contact implements Comparable<Contact> {
 	private String _website;
 
 	public Contact(String city, String state, String zip, String address, String address2, String lastName,
-			String firstName, String phoneNumber, String email, String website) {
+			       String firstName, String phoneNumber, String email, String website) {
 
 		set_firstName(firstName);
 		set_lastName(lastName);
@@ -112,5 +110,4 @@ public class Contact implements Comparable<Contact> {
 	public int compareTo(Contact c) {
 		return (this._lastName).compareTo(c._lastName);
 	}
-
 }

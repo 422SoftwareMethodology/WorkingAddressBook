@@ -2,9 +2,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,23 +20,18 @@ public class Createbookname extends JFrame {
 	public static String fileLocation = "";
 
 	public Createbookname(String booksLocation) {
-		super("Please enter the addressbook name!");
+		super("Please enter an address book name");
 		namepanel = new JPanel(new GridLayout(1, 3)); // only one panel in this
 														// interface
 		bookname = new JTextField();
 		setInputaddressbook(bookname.getText());
-		System.out.println(bookname.getText().toString());
 		prompt = new JLabel("             New addressbook name:");
 		submit = new JButton("submit");
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { // jump to the
 															// addressbook
 															// interface
-				dispose(); // after customer click the button, close the current
-							// window
-				// String fileLoc = new
-				// File(bookname.getText().toString()).getAbsolutePath(); //
-				// Default Save Path
+				dispose();
 				fileLocation = booksLocation + bookname.getText().toString();
 				Frame1 f1 = new Frame1(fileLocation);
 				f1.setLocation(200, 50);
@@ -49,10 +41,9 @@ public class Createbookname extends JFrame {
 			}
 		});
 
-		namepanel.add(prompt); // add allthings to the panel
+		namepanel.add(prompt); // add all things to the panel
 		namepanel.add(bookname);
 		namepanel.add(submit);
-
 		add(namepanel, BorderLayout.CENTER); // set panel location
 		setSize(700, 70); // set frame size
 		setVisible(true);
@@ -63,7 +54,7 @@ public class Createbookname extends JFrame {
 	}
 
 	public void setInputaddressbook(String inputaddressbook) {
-		this.inputaddressbook = inputaddressbook;
+		Createbookname.inputaddressbook = inputaddressbook;
 	}
 
 	public static String getFileLocation() {

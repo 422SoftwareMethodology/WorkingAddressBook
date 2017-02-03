@@ -75,10 +75,10 @@ public class PersonInfoEdit extends JFrame {
 				if (f.getText().isEmpty())
 					checknum += 1;
 				if (fname.getText().isEmpty() && lname.getText().isEmpty()) {
-					prompt1 p1 = new prompt1();
+					Prompt1 p1 = new Prompt1();
 					p1.setLocation(300, 200);
 				} else if (checknum == 8) {
-					prompt1 p1 = new prompt1();
+					Prompt1 p1 = new Prompt1();
 					p1.setLocation(300, 200);
 				}
 

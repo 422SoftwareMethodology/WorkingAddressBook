@@ -9,6 +9,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Confirmation box for deleting an address book
+ * 
+ */
+
 @SuppressWarnings("serial")
 public class DeleteBookConfirmation extends JFrame {
 	private JPanel labelpanel, buttonpanel;
@@ -20,7 +25,6 @@ public class DeleteBookConfirmation extends JFrame {
 		buttonpanel = new JPanel(new GridLayout(1, 2));
 
 		confirmation = new JLabel("            Are you sure you want to delete this address book?");
-
 		Yes = new JButton("Yes");
 		Yes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -49,7 +53,5 @@ public class DeleteBookConfirmation extends JFrame {
 
 		setSize(350, 90);
 		setVisible(true);
-
 	}
-
 }
