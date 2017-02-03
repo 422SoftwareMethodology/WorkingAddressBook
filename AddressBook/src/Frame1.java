@@ -60,10 +60,12 @@ public class Frame1 extends JFrame {
 				    if(PromptResult == 0) {
 				    	try {
 							Writer.writer(openContactList, fileLoc);
+							isEdited = false;
 						} catch (FileNotFoundException e) {
 							e.printStackTrace();
 						}        
 				    } else if (PromptResult == 1) {
+				    	isEdited = false;
 				    	System.exit(0);
 				    }
 				} else {
@@ -360,6 +362,7 @@ public class Frame1 extends JFrame {
 		openContactList = AddTableToContact();
 		try {
 			Writer.writer(openContactList, fileLoc);
+			isEdited = false;
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
