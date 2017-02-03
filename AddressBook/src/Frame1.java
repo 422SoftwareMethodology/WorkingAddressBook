@@ -49,7 +49,7 @@ public class Frame1 extends JFrame {
 
 	public Frame1(String fileLoc) { // This is the main interface of addressbook
 		super(Menu.getFileName(fileLoc));
-			addWindowListener(new WindowAdapter() {
+		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent we) {
 				if (isEdited) {
 					String ObjButtons[] = { "Save" , "Exit" };
