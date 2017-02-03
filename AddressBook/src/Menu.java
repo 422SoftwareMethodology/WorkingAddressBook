@@ -44,8 +44,6 @@ public class Menu extends JFrame {
 
 	public Menu(ArrayList<String> addressNames) {
 		super("Welcome!");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// setLayout(new BorderLayout());
 		addressBookNames = addressNames;
 		JFileChooser chooser = new JFileChooser();
 
@@ -65,7 +63,7 @@ public class Menu extends JFrame {
 															// addressbook name
 															// window.
 				Createbookname c1 = new Createbookname(bookFolderLoc);
-				c1.setLocation(100, 50);
+				c1.setLocation(10, 10);
 				/*
 				 * Frame1 f1 = new Frame1(c1.fileLocation); f1.setLocation(200,
 				 * 50); f1.save(c1.fileLocation);
@@ -86,7 +84,7 @@ public class Menu extends JFrame {
 				String fileLoc = bookFolderLoc + fileName;
 				System.out.println(fileLoc);
 				Frame1 f1 = new Frame1(fileLoc);
-				f1.setLocation(150, 50);
+				f1.setLocation(10, 10);
 			}
 		});
 

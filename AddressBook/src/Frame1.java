@@ -66,10 +66,12 @@ public class Frame1 extends JFrame {
 						}        
 				    } else if (PromptResult == 1) {
 				    	isEdited = false;
-				    	System.exit(0);
+				    	setVisible(false);
+						dispose();
 				    }
 				} else {
-					System.exit(0);
+					setVisible(false);
+					dispose();
 				}
 			}
 		});
